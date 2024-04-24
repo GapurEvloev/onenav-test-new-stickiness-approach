@@ -1,9 +1,17 @@
 import styled from 'styled-components';
+import {ElementType} from "react";
 
 // styled item depending on the props.as
 export const StyledClickable = styled.div.withConfig({
-  displayName: 'StyledClickable'
-})<{ as: string }>`
+  displayName: 'Clickable'
+}).attrs(props => ({
+  as: props.as
+}))<{
+  as?: ElementType;
+  variant?: 'simple-clickable' | 'logo' | 'divider';
+  primary?: boolean;
+  secondary?: boolean;
+}>`
   cursor: pointer;
   display: inline-block;
   text-decoration: none;

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import {ResponsiveSetting} from "../../types.ts";
+import { ResponsiveSetting } from '../../types';
 
 type GapSize =
   | 'space.025'
@@ -88,15 +88,21 @@ const spaceToRem = {
 const StyledGrid = styled.div.withConfig({
   displayName: 'GlobalNavigationRowContainer'
 })<GridProps>`
-  ${({visibility}) => visibility && visibilityToDisplay(visibility)};
-  // ${({columns}) => columns ? `grid-template-columns: repeat(${columns}, minmax(max-content, 1fr))` : 'grid-auto-flow: column'};
-  ${({columns}) => columns ? `grid-template-columns: ${typeof columns === 'number' ? `repeat(${columns}, minmax(max-content, 1fr))` : columns};`: 'grid-auto-flow: column'};
-  gap: ${({gap}) => spaceToRem[gap || 'space.100']};
+  ${({ visibility }) => visibility && visibilityToDisplay(visibility)};
+  ${({ columns }) =>
+      columns
+          ? `grid-template-columns: ${
+              typeof columns === 'number'
+                  ? `repeat(${columns}, minmax(max-content, 1fr))`
+                  : columns
+          };`
+          : 'grid-template-columns: repeat(12,minmax(min-content, 1fr))'};
+  gap: ${({ gap }) => spaceToRem[gap || 'space.100']};
   background-color: #eee;
   border: 1px solid #c0c0c0;
-  justify-items: ${({justifyItems}) => justifyItems || 'stretch'};
-  justify-content: ${({justifyContent}) => justifyContent || 'stretch'};
-  align-items: ${({alignItems}) => alignItems || 'center'};
+  justify-items: ${({ justifyItems }) => justifyItems || 'stretch'};
+  justify-content: ${({ justifyContent }) => justifyContent || 'stretch'};
+  align-items: ${({ alignItems }) => alignItems || 'center'};
 `;
 
 export const GlobalNavigationRowContainer: React.FC<GridProps> = ({

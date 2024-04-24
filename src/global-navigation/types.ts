@@ -15,12 +15,12 @@ export const breakpointSizes = {
   [Breakpoints.LG]: '768px', // Represents large devices and up
   [Breakpoints.XL]: '1024px', // Extra large devices
   [Breakpoints.XXL]: '1280px', // Bigger than XL
-  [Breakpoints.XXXL]: '1600px', // Bigger than XXL
+  [Breakpoints.XXXL]: '1600px' // Bigger than XXL
 };
 
 export type ResponsiveSetting<T> = {
   [key in Breakpoints]?: T;
-}
+};
 
 export enum Alignment {
   START = 'start',
@@ -79,7 +79,7 @@ export type ClickableAreaConfig = {
 };
 
 export type GlobalNavigationRowConfig = {
-  columns: string;
+  columns?: string;
   justifyItems?: Alignment;
   justifyContent?: Alignment;
   visibility: ResponsiveSetting<boolean>; // Could be expanded into a more complex type for handling breakpoints
