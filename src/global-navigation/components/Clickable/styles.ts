@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import {ElementType} from "react";
+import { ElementType } from 'react';
 
 // styled item depending on the props.as
-export const StyledClickable = styled.div.withConfig({
-  displayName: 'Clickable'
-}).attrs(props => ({
-  as: props.as
-}))<{
+export const StyledClickable = styled.div
+  .withConfig({
+    displayName: 'Clickable'
+  })
+  .attrs((props) => ({
+    as: props.as
+  }))<{
   as?: ElementType;
   variant?: 'simple-clickable' | 'logo' | 'divider';
   primary?: boolean;

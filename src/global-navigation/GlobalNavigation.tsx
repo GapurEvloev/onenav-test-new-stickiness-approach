@@ -6,7 +6,9 @@ import { GlobalNavigationConfig } from './types';
 const GlobalNavigation: React.FC<GlobalNavigationConfig> = ({ rows }) => {
   return (
     <GlobalNavigationContainer>
-      {rows.map((row, index) => <GlobalNavigationRow key={index} {...row} />)}
+      {rows?.map((row, index) => (
+          <GlobalNavigationRow key={index} {...row} />
+      ))}
     </GlobalNavigationContainer>
   );
 };

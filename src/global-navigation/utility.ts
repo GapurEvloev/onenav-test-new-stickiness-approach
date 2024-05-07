@@ -1,8 +1,13 @@
-import { Breakpoints, breakpointSizes, ResponsiveSetting } from './types';
+import {
+    Breakpoints,
+    breakpointSizes,
+    ResponsiveSetting,
+    VisibilityOptions
+} from './types';
 
 export const generateResponsiveStyles = (
     property: string,
-    config: ResponsiveSetting<string> | string,
+    config: ResponsiveSetting<string | number> | string | number,
     defaultBreakpoint: Breakpoints
 ) => {
     return Object.entries(config)
@@ -10,15 +15,14 @@ export const generateResponsiveStyles = (
         .map(
             ([breakpoint, value]) => `
       @media (min-width: ${breakpointSizes[breakpoint as Breakpoints]}) {
-        ${property}: ${value};
-      }
-    `
+          ${property}: ${value};
+      }`
         )
         .join('');
 };
 
 export const generateResponsiveVisibility = (
-    visibility: ResponsiveSetting<boolean>,
+    visibility: ResponsiveSetting<VisibilityOptions> | VisibilityOptions,
     defaultBreakpoint: Breakpoints
 ) => {
     return Object.entries(visibility)
@@ -26,14 +30,15 @@ export const generateResponsiveVisibility = (
         .map(
             ([breakpoint, isVisible]) => `
       @media (min-width: ${breakpointSizes[breakpoint as Breakpoints]}) {
-        display: ${isVisible ? 'flex' : 'none'};
-      }
-    `
+          display: ${isVisible ? 'flex' : 'none'};
+      }`
         )
         .join('');
 };
 
-export const getVisibilityStyles = (visibility: ResponsiveSetting<boolean>) => {
+export const getVisibilityStyles = (
+    visibility: ResponsiveSetting<VisibilityOptions> | VisibilityOptions
+) => {
     if (typeof visibility === 'object') {
         const displayStyle = visibility[Breakpoints.SM] ? 'flex' : 'none';
         const responsiveStyles = generateResponsiveVisibility(
