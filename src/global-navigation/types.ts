@@ -35,6 +35,8 @@ export type VisibilityOptions =
     | 'block'
     | 'inline';
 
+export type StickyOptions = 'always' | 'hideOnScrollDown' | 'hideOnScrollUp' | 'none';
+
 export type ResponsiveSetting<T> = {
   [key in Breakpoints]?: T;
 };
@@ -134,7 +136,7 @@ export type ClickableAreaConfig = {
 export type GlobalNavigationRowConfig = {
   columns?: ResponsiveSetting<string> | string;
   visibility?: ResponsiveSetting<VisibilityOptions> | VisibilityOptions; // Could be expanded into a more complex type for handling breakpoints
-  sticky?: ResponsiveSetting<boolean> | boolean;
+  sticky?: ResponsiveSetting<boolean | number> | boolean | number;
   order?: ResponsiveSetting<number> | number;
   size?: ResponsiveSetting<string> | string;
   justifyContent?: ResponsiveSetting<Alignment> | Alignment;

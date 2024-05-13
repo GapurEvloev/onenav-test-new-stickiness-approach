@@ -3,7 +3,11 @@ import { GlobalNavigationRowContainer } from './styles';
 import GlobalNavigationArea from '../GlobalNavigationArea';
 import { GlobalNavigationRowConfig } from '../../types';
 
-const GlobalNavigationRow: React.FC<GlobalNavigationRowConfig> = ({
+export type GlobalNavigationRowProps = GlobalNavigationRowConfig & {
+  position: { top: number; scrollY: number; direction: 'up' | 'down' };
+}
+
+const GlobalNavigationRow: React.FC<GlobalNavigationRowProps> = ({
   areas,
   ...rest
 }) => {

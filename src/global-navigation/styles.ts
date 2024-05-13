@@ -5,7 +5,13 @@ export const GlobalNavigationContainer = styled.div.withConfig({
 })`
   display: flex;
   flex-direction: column;
-  padding: 2rem;
-  background-color: #e1e7e3;
-  gap: 1rem 0;
+  background-color: #dcdcdc;
+  position: fixed;
+  will-change: sticky;
+  width: 100%;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  max-height: max-content;
 `;
