@@ -156,7 +156,7 @@ export const globalNavigationStructureAllure: GlobalNavigationConfig = {
         xxl: true,
         xxxl: true
       },
-      sticky: 600, //{ sm: 600, xl: 1000 },
+      sticky: 600, // true | false | number "hideOnScroll"
       areas: [
         {
           gridColumn: {
@@ -307,162 +307,162 @@ export const globalNavigationStructureAllure: GlobalNavigationConfig = {
       ]
     },
     // // globalNavigationStructureFigmaCase1 Row 2
-    // {
-    //   columns: 'auto 1fr max-content',
-    //   visibility: {
-    //     sm: true,
-    //     md: true,
-    //     lg: true,
-    //     xl: true,
-    //     xxl: true,
-    //     xxxl: true
-    //   },
-    //   sticky: {
-    //     sm: true,
-    //     md: true,
-    //     lg: true,
-    //     xl: true,
-    //     xxl: true,
-    //     xxxl: true
-    //   },
-    //   areas: [
-    //     {
-    //       gridColumn: 'auto',
-    //       justifyContent: {
-    //         sm: Alignment.START
-    //       },
-    //       visibility: {
-    //         sm: true,
-    //         lg: false
-    //       },
-    //       areaName: 'join',
-    //       transformer: {
-    //         source: 'primaryLinks',
-    //         strategy: 'merge-and-sort',
-    //         itemDefaults: {}
-    //       },
-    //       items: [
-    //         {
-    //           as: 'span',
-    //           variant: Variant.SIMPLE_CLICKABLE,
-    //           label: 'Join'
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       gridColumn: 'auto',
-    //       justifyContent: {
-    //         sm: Alignment.CENTER,
-    //         lg: Alignment.START
-    //       },
-    //       areaName: 'Logo',
-    //       transformer: {
-    //         source: 'primaryLinks',
-    //         strategy: 'merge-and-sort',
-    //         itemDefaults: {}
-    //       },
-    //       items: [
-    //         {
-    //           as: 'a',
-    //           variant: Variant.LOGO,
-    //           url: '/',
-    //           label: 'LOGO'
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       gridColumn: 'auto',
-    //       justifyContent: {
-    //         lg: Alignment.END,
-    //         sm: Alignment.END
-    //       },
-    //       visibility: {
-    //         sm: true,
-    //         lg: false
-    //       },
-    //       areaName: 'Burger Menu',
-    //       transformer: {
-    //         source: 'primaryLinks',
-    //         strategy: 'merge-and-sort',
-    //         itemDefaults: {}
-    //       },
-    //       items: [
-    //         {
-    //           as: 'a',
-    //           variant: Variant.MENU,
-    //           url: '/',
-    //           label: '='
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       gridColumn: {
-    //         sm: '1 / -1',
-    //         lg: 'auto'
-    //       },
-    //       justifyContent: {
-    //         sm: Alignment.CENTER,
-    //         lg: Alignment.CENTER
-    //       },
-    //       areaName: 'secondary-links',
-    //       transformer: {
-    //         source: 'secondaryLinks',
-    //         strategy: 'merge-and-sort',
-    //         itemDefaults: {}
-    //       },
-    //       items: [
-    //         {
-    //           as: 'span',
-    //           variant: Variant.LINK,
-    //           url: '/',
-    //           label: 'Top channel 1'
-    //         },
-    //         {
-    //           as: 'a',
-    //           variant: Variant.LINK,
-    //           url: '/',
-    //           label: 'Top channel 2'
-    //         },
-    //         {
-    //           as: 'a',
-    //           variant: Variant.LINK,
-    //           url: '/',
-    //           label: 'Top channel 3'
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       gridColumn: 'auto',
-    //       justifyContent: {
-    //         lg: Alignment.END,
-    //         sm: Alignment.END
-    //       },
-    //       visibility: {
-    //         sm: false,
-    //         lg: true
-    //       },
-    //       areaName: 'join and menu',
-    //       transformer: {
-    //         source: 'primaryLinks',
-    //         strategy: 'merge-and-sort',
-    //         itemDefaults: {}
-    //       },
-    //       items: [
-    //         {
-    //           as: 'span',
-    //           variant: Variant.SIMPLE_CLICKABLE,
-    //           label: 'Join'
-    //         },
-    //         {
-    //           as: 'a',
-    //           variant: Variant.MENU,
-    //           url: '/',
-    //           label: 'Menu'
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
+    {
+      columns: 'auto 1fr max-content',
+      visibility: {
+        sm: true,
+        md: true,
+        lg: true,
+        xl: true,
+        xxl: true,
+        xxxl: true
+      },
+      sticky: {
+        sm: false,
+        md: true,
+        lg: true,
+        xl: true,
+        xxl: true,
+        xxxl: true
+      },
+      areas: [
+        {
+          gridColumn: 'auto',
+          justifyContent: {
+            sm: Alignment.START
+          },
+          visibility: {
+            sm: true,
+            lg: false
+          },
+          areaName: 'join',
+          transformer: {
+            source: 'primaryLinks',
+            strategy: 'merge-and-sort',
+            itemDefaults: {}
+          },
+          items: [
+            {
+              as: 'span',
+              variant: Variant.SIMPLE_CLICKABLE,
+              label: 'Join'
+            }
+          ]
+        },
+        {
+          gridColumn: 'auto',
+          justifyContent: {
+            sm: Alignment.CENTER,
+            lg: Alignment.START
+          },
+          areaName: 'Logo',
+          transformer: {
+            source: 'primaryLinks',
+            strategy: 'merge-and-sort',
+            itemDefaults: {}
+          },
+          items: [
+            {
+              as: 'a',
+              variant: Variant.LOGO,
+              url: '/',
+              label: 'LOGO'
+            }
+          ]
+        },
+        {
+          gridColumn: 'auto',
+          justifyContent: {
+            lg: Alignment.END,
+            sm: Alignment.END
+          },
+          visibility: {
+            sm: true,
+            lg: false
+          },
+          areaName: 'Burger Menu',
+          transformer: {
+            source: 'primaryLinks',
+            strategy: 'merge-and-sort',
+            itemDefaults: {}
+          },
+          items: [
+            {
+              as: 'a',
+              variant: Variant.MENU,
+              url: '/',
+              label: '='
+            }
+          ]
+        },
+        {
+          gridColumn: {
+            sm: '1 / -1',
+            lg: 'auto'
+          },
+          justifyContent: {
+            sm: Alignment.CENTER,
+            lg: Alignment.CENTER
+          },
+          areaName: 'secondary-links',
+          transformer: {
+            source: 'secondaryLinks',
+            strategy: 'merge-and-sort',
+            itemDefaults: {}
+          },
+          items: [
+            {
+              as: 'span',
+              variant: Variant.LINK,
+              url: '/',
+              label: 'Top channel 1'
+            },
+            {
+              as: 'a',
+              variant: Variant.LINK,
+              url: '/',
+              label: 'Top channel 2'
+            },
+            {
+              as: 'a',
+              variant: Variant.LINK,
+              url: '/',
+              label: 'Top channel 3'
+            }
+          ]
+        },
+        {
+          gridColumn: 'auto',
+          justifyContent: {
+            lg: Alignment.END,
+            sm: Alignment.END
+          },
+          visibility: {
+            sm: false,
+            lg: true
+          },
+          areaName: 'join and menu',
+          transformer: {
+            source: 'primaryLinks',
+            strategy: 'merge-and-sort',
+            itemDefaults: {}
+          },
+          items: [
+            {
+              as: 'span',
+              variant: Variant.SIMPLE_CLICKABLE,
+              label: 'Join'
+            },
+            {
+              as: 'a',
+              variant: Variant.MENU,
+              url: '/',
+              label: 'Menu'
+            }
+          ]
+        }
+      ]
+    },
     // // globalNavigationStructureFigmaCase2 Row 1
     // {
     //   columns: {

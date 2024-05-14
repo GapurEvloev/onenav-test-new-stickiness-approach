@@ -1,11 +1,10 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import throttle from 'lodash.throttle';
 
-interface Position {
+export interface Position {
     scrollY: number;
     top: number;
     direction: 'up' | 'down';
-    height?: number;
 }
 
 const useElementPosition = (elementRef: React.RefObject<HTMLDivElement>): Position => {
@@ -14,7 +13,6 @@ const useElementPosition = (elementRef: React.RefObject<HTMLDivElement>): Positi
         top: 0,
         direction: 'down',
     });
-    // const elementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleScroll = throttle(() => {
@@ -30,22 +28,19 @@ const useElementPosition = (elementRef: React.RefObject<HTMLDivElement>): Positi
                     };
                 });
             }
-        }, 300); // Throttle the event handler to fire at most once every 300 milliseconds
+        }, 300);
 
-        // Adding scroll and resize listeners to track changes
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
 
-        // Initial check
         handleScroll();
 
-        // Cleanup
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('resize', handleScroll);
-            handleScroll.cancel(); // Cancel the throttled function
+            handleScroll.cancel();
         };
-    }, [elementRef]); // Ensure this effect runs only when the elementRef changes
+    }, [elementRef]);
 
     return {
         ...position,

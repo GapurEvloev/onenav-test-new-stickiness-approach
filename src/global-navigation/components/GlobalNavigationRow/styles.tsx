@@ -12,7 +12,7 @@ interface GridProps extends Omit<GlobalNavigationRowConfig, 'areas'> {
   children: ReactNode;
   as?: 'div' | 'ol' | 'span' | 'ul';
   testId?: string;
-  position: { top: number; scrollY: number; direction: 'up' | 'down' };
+  rowStyles: string;
 }
 
 // Helper function to convert visibility to CSS display property
@@ -34,18 +34,7 @@ const StyledGridInner = styled.div.withConfig({
   ${({ visibility }) => visibility && visibilityToDisplay(visibility)};
   transition: grid-template-rows 200ms linear;
   max-height: max-content;
-  ${({ position: {top, scrollY, direction}, sticky, visibility }) => {
-    console.log({top, direction, scrollY, sticky, visibility});
-    if((!sticky && typeof(sticky) === 'boolean' && scrollY >= 300 && direction === 'down') || (sticky && typeof(sticky) === 'number' && scrollY >= sticky && direction === 'down')) {
-      return `
-        grid-template-rows: 0fr;
-      `;
-    }
-      
-    return `
-      grid-template-rows: 1fr;
-    `
-  }};
+  ${({ rowStyles }) => rowStyles};
 `;
 
 const StyledGrid = styled.div.withConfig({
@@ -68,16 +57,6 @@ const StyledGrid = styled.div.withConfig({
       };`}
   gap: ${({ gap = '1rem' }) => gap};
   background-color: #eee;
-  ${({ position: {scrollY, direction}, sticky }) => {
-    if((!sticky && typeof(sticky) === 'boolean' && scrollY >= 300 && direction === 'down') || (sticky && typeof(sticky) === 'number' && scrollY >= sticky && direction === 'down')) {
-      return `
-        border-bottom: none;
-      `;
-    }
-    return `
-      border-bottom: 1px solid #c0c0c0;
-    `
-  }};
   justify-items: ${({ justifyItems }) => justifyItems || 'stretch'};
   justify-content: ${({ justifyContent }) => justifyContent || 'stretch'};
   align-items: ${({ alignItems }) => alignItems || 'center'};

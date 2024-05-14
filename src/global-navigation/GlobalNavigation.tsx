@@ -21,7 +21,7 @@ const GlobalNavigation: React.FC<GlobalNavigationConfig> = ({ rows }) => {
     if (navRef.current) {
       setNavHeight(navRef.current.clientHeight);
     }
-  }, []);
+  }, [navRef.current]);
 
   return (
     <>
