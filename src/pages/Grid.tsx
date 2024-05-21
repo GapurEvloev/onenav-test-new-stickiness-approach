@@ -1,5 +1,5 @@
 import GlobalNavigation from "../global-navigation";
-import {globalNavigationStructureAllure, globalNavigationStructureVogue} from "../_global-navigation.ts";
+import {globalNavigationStructureAllure, globalNavigationStructureVogue} from "../global-navigation/_global-navigation.ts";
 
 const Grid = () => {
     return (

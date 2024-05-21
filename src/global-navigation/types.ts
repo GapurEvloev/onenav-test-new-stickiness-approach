@@ -28,14 +28,12 @@ export const mediaQueries: Record<Breakpoints, string> = {
 };
 
 export type VisibilityOptions =
-    | boolean
-    | 'none'
-    | 'flex'
-    | 'grid'
-    | 'block'
-    | 'inline';
-
-export type StickyOptions = 'always' | 'hideOnScrollDown' | 'hideOnScrollUp' | 'none';
+  | boolean
+  | 'none'
+  | 'flex'
+  | 'grid'
+  | 'block'
+  | 'inline';
 
 export type ResponsiveSetting<T> = {
   [key in Breakpoints]?: T;
@@ -97,16 +95,26 @@ export type Cols = {
   [key in Breakpoints]?: string | number;
 };
 
-type Source = 'primaryLinks' | 'secondaryLinks';
+type Source =
+  | 'primaryLinks'
+  | 'secondaryLinks'
+  | 'contactLinks'
+  | 'noticesLinks'
+  | 'subchannelLinks'
+  | 'utilityLinks'
+  | 'accountLinks';
 
 type ItemDefaults = {
   variant?: Variant;
+  type?: string;
+  as?: string;
 };
 
 type Transformer = {
-  source: Source;
+  source?: Source;
   strategy: string; // for future, tbd - could be a union of possible strategies
   itemDefaults: ItemDefaults;
+  type?: string;
 };
 
 export type ClickableConfig = {
@@ -127,7 +135,7 @@ export type ClickableAreaConfig = {
   alignItems?: ResponsiveSetting<Alignment> | Alignment;
   alignContent?: ResponsiveSetting<Alignment> | Alignment;
   gap?: ResponsiveSetting<string> | string;
-  transformer: Transformer;
+  transformer?: Transformer;
   items: ClickableConfig[];
   id?: string;
   className?: string;
@@ -136,7 +144,7 @@ export type ClickableAreaConfig = {
 export type GlobalNavigationRowConfig = {
   columns?: ResponsiveSetting<string> | string;
   visibility?: ResponsiveSetting<VisibilityOptions> | VisibilityOptions; // Could be expanded into a more complex type for handling breakpoints
-  sticky?: ResponsiveSetting<boolean | number> | boolean | number;
+  hideOnScroll?: ResponsiveSetting<boolean | number> | boolean | number;
   order?: ResponsiveSetting<number> | number;
   size?: ResponsiveSetting<string> | string;
   justifyContent?: ResponsiveSetting<Alignment> | Alignment;
@@ -152,6 +160,21 @@ export type GlobalNavigationRowConfig = {
   ref?: RefObject<HTMLDivElement>;
 };
 
+export type Navigation = {
+  //  primaryLinks?: PrimaryLinks[];
+};
+/*
+export type PrimaryLinks = {
+  showInTopNav?: boolean,
+  text?: string,
+  url?: string,
+  isActive?: boolean,
+  isExternal?: boolean,
+  forceLeftOfNav?: boolean,
+}
+*/
+
 export type GlobalNavigationConfig = {
   rows: GlobalNavigationRowConfig[];
+  navigation?: Navigation[];
 };

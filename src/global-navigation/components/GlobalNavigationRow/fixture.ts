@@ -8,14 +8,7 @@ export const mockRowConfig = {
     xxl: true,
     xxxl: true
   },
-  sticky: {
-    sm: true,
-    md: true,
-    lg: true,
-    xl: true,
-    xxl: true,
-    xxxl: true
-  },
+  hideOnScroll: false,
   areas: [
     {
       name: 'logo-and-menu',

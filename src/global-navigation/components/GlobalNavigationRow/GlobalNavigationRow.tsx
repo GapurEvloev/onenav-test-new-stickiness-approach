@@ -11,13 +11,13 @@ export type GlobalNavigationRowProps = GlobalNavigationRowConfig & {
 const GlobalNavigationRow: React.FC<GlobalNavigationRowProps> = ({
   areas,
   position,
-  sticky,
+  hideOnScroll,
   ...rest
 }) => {
-  const rowStyles = useStickyStyles(position, sticky);
+  const rowStyles = useStickyStyles(position, hideOnScroll);
   console.log({rowStyles})
   return <GlobalNavigationRowContainer rowStyles={rowStyles} {...rest}>
-    {areas.map((area, index) => (
+    {areas?.map((area, index) => (
       <GlobalNavigationArea key={index} {...area} />
     ))}
   </GlobalNavigationRowContainer>

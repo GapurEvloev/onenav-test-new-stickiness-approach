@@ -64,12 +64,11 @@ const StyledGrid = styled.div.withConfig({
   //transition: all 5s linear;
 `;
 
-export const GlobalNavigationRowContainer = React.forwardRef<HTMLElement, GridProps>(
-  ({ children, ...props }) => {
-    return <StyledGridInner {...props}>
-      <StyledGrid {...props}>
-        {children}
-      </StyledGrid>
-    </StyledGridInner>
-  }
+export const GlobalNavigationRowContainer: React.FC<GridProps> = ({
+  children,
+  ...props
+}) => (
+  <StyledGridInner {...props}>
+    <StyledGrid {...props}>{children}</StyledGrid>
+  </StyledGridInner>
 );
