@@ -1,39 +1,23 @@
 import styled from 'styled-components';
-import {Breakpoints, ClickableAreaConfig} from '../../types';
-import {generateResponsiveStyles, getVisibilityStyles} from '../../utility';
+import { createResponsiveStyles, createVisibilityStyles } from '../../utility';
+import { ClickableAreaConfig } from '../../types';
 
 type GlobalNavigationAreaProps = Omit<ClickableAreaConfig, 'items'>;
 
-export const GlobalNavigationAreaContainer = styled.div.withConfig({
-  displayName: 'ClickableArea'
-})<GlobalNavigationAreaProps>`
+export const GlobalNavigationAreaContainer = styled.div<GlobalNavigationAreaProps>`
   padding: 1rem;
   background-color: #dcdcdc;
   flex-wrap: wrap;
   gap: 1rem 0.25rem;
   display: flex;
 
-  ${({gridColumn}) =>
-    typeof gridColumn === 'object'
-      ? `grid-column: ${gridColumn[Breakpoints.SM]};
-      ${generateResponsiveStyles('grid-column', gridColumn, Breakpoints.SM)}`
-      : `grid-column: ${gridColumn || 'unset'};`};
-
-  ${({justifyContent}) =>
-    typeof justifyContent === 'object'
-      ? `justify-content: ${justifyContent[Breakpoints.SM]};
-      ${generateResponsiveStyles(
-        'justify-content',
-        justifyContent,
-        Breakpoints.SM
-      )}`
-      : `justify-content: ${justifyContent || 'stretch'};`};
-
-  ${({visibility}) => (visibility ? getVisibilityStyles(visibility) : '')};
-
-  ${({order}) =>
-    typeof order === 'object'
-      ? `order: ${order[Breakpoints.SM]};
-      ${generateResponsiveStyles('order', order, Breakpoints.SM)}`
-      : `order: ${order || 'unset'};`};
+  ${({ gridColumn }) => gridColumn && createResponsiveStyles('grid-column', gridColumn)};
+  ${({ justifyContent }) => justifyContent && createResponsiveStyles('justify-content', justifyContent)};
+  ${({ visibility }) => visibility && createVisibilityStyles(visibility)};
+  ${({ order }) => order && createResponsiveStyles('order', order)};
+  ${({ justifyItems }) => justifyItems && createResponsiveStyles('justify-items', justifyItems)};
+  ${({ alignItems }) => alignItems && createResponsiveStyles('align-items', alignItems)};
+  ${({ alignContent }) => alignContent && createResponsiveStyles('align-content', alignContent)};
+  ${({ gap }) => gap && createResponsiveStyles('gap', gap)};
+  ${({ justifySelf }) => justifySelf && createResponsiveStyles('justify-self', justifySelf)};
 `;

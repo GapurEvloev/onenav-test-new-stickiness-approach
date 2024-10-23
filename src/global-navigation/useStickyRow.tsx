@@ -1,38 +1,58 @@
 import { useEffect, useState } from 'react';
-import { ResponsiveSetting } from './types';
+import {ResponsiveSetting, Breakpoints, breakpointSizes} from './types';
 import { Position } from './useScrollPosition';
+import throttle from "lodash.throttle";
 
-export const useStickyStyles = (
-  position: Position,
-  hideOnScroll?: ResponsiveSetting<boolean | number> | boolean | number
-) => {
-  const [styles, setStyles] = useState('');
+const getActiveBreakpoint = (breakpoints: ResponsiveSetting<boolean | number>, windowWidth: number): Breakpoints => {
+  return (Object.keys(breakpoints) as Breakpoints[])
+    .filter(breakpoint => Number(breakpointSizes[breakpoint].replace(/[^0-9.]+/g, '')) <= windowWidth)
+    .sort((a, b) => Number(breakpointSizes[b].replace(/[^0-9.]+/g, '')) - Number(breakpointSizes[a].replace(/[^0-9.]+/g, '')))[0] || Breakpoints.SM;
+};
+
+const getHideThreshold = (
+  hideOnScroll: ResponsiveSetting<boolean | number> | boolean | number, 
+  scrollY: number
+): boolean => {
+  if (typeof hideOnScroll === 'boolean') {
+    return hideOnScroll && scrollY >= 300;
+  }
+  if (typeof hideOnScroll === 'number') {
+    return scrollY >= hideOnScroll;
+  }
+  if (typeof hideOnScroll === 'object') {
+    const activeBreakpoint = getActiveBreakpoint(hideOnScroll, window.innerWidth);
+    const threshold = hideOnScroll[activeBreakpoint];
+    console.log({activeBreakpoint, threshold});
+    if (typeof threshold === 'number') {
+      return scrollY >= threshold;
+    }
+    return !!threshold && scrollY >= 300;
+  }
+  return false;
+};
+
+export const useStickyRow = (
+  position: Position, 
+  hideOnScroll: ResponsiveSetting<boolean | number> | boolean | number
+): string => {
+  const [stickyClassName, setStickyClassName] = useState('');
   const { scrollY, direction } = position;
-  
+
   useEffect(() => {
-    const getHideThreshold = (
-      hideOnScroll: ResponsiveSetting<boolean | number> | boolean | number
-    ) => {
-      return typeof hideOnScroll === 'number' ? hideOnScroll : 300;
+    const handleResize = throttle(() => {
+      console.log(hideOnScroll, scrollY);
+      const isHidden = getHideThreshold(hideOnScroll, scrollY) && direction === 'down';
+      setStickyClassName(isHidden ? 'sticky-hidden' : 'sticky-visible');
+    }, 300);
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      handleResize.cancel();
     };
-    
-    const isHidden =
-      hideOnScroll &&
-      scrollY >= getHideThreshold(hideOnScroll) &&
-      direction === 'down';
-    
-    setStyles(
-      isHidden
-        ? `
-      grid-template-rows: 0fr;
-      border-bottom: none;
-    `
-        : `
-      grid-template-rows: 1fr;
-      border-bottom: 1px solid #c0c0c0;
-    `
-    );
-  }, [scrollY, direction, hideOnScroll]);
-  
-  return styles;
+  }, [hideOnScroll, scrollY, direction]);
+
+  return stickyClassName;
 };

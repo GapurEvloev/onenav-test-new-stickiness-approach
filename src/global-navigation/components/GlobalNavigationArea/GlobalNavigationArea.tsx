@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Clickable } from '../Clickable';
 import { GlobalNavigationAreaContainer } from './styles';
 import { ClickableAreaConfig } from '../../types';
 
-const GlobalNavigationArea: React.FC<ClickableAreaConfig> = ({
-  items,
-  ...rest
-}) => (
+const GlobalNavigationArea: React.FC<ClickableAreaConfig> = memo(({ items, ...rest }) => (
   <GlobalNavigationAreaContainer {...rest}>
     {items.map((item, index) => (
       <Clickable key={index} as={item.as} href={item.url || '#'}>
@@ -14,6 +11,6 @@ const GlobalNavigationArea: React.FC<ClickableAreaConfig> = ({
       </Clickable>
     ))}
   </GlobalNavigationAreaContainer>
-);
+));
 
 export default GlobalNavigationArea;

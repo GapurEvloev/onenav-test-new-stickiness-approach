@@ -1,67 +1,51 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
-import {
-  Breakpoints,
-  GlobalNavigationRowConfig,
-  ResponsiveSetting,
-  VisibilityOptions
-} from '../../types';
-import { generateResponsiveStyles } from '../../utility';
+import styled, { css } from 'styled-components';
+import { GlobalNavigationRowConfig } from '../../types';
+import { createResponsiveStyles, createVisibilityStyles } from '../../utility';
 
-interface GridProps extends Omit<GlobalNavigationRowConfig, 'areas'> {
+interface GridProps extends Omit<GlobalNavigationRowConfig, 'areas' | 'hideOnScroll'> {
   children: ReactNode;
   as?: 'div' | 'ol' | 'span' | 'ul';
   testId?: string;
-  rowStyles: string;
 }
 
-// Helper function to convert visibility to CSS display property
-const visibilityToDisplay = (
-  visibility: ResponsiveSetting<VisibilityOptions> | VisibilityOptions
-) => {
-  let displayValues = `display: grid; `;
-  Object.entries(visibility).forEach(([breakpoint, isVisible]) => {
-    if (!isVisible) {
-      displayValues += `@media (max-width: ${breakpoint}) { display: none; } `;
+const gridRowStyles = css<GridProps>`
+  ${({ className }) => className && css`
+    &.sticky-hidden {
+      grid-template-rows: 0fr;
+      border-bottom: none;
     }
-  });
-  return displayValues;
-};
+    
+    &.sticky-visible {
+      grid-template-rows: 1fr;
+      border-bottom: 1px solid #ccc;
+    }
+  `};
+`;
 
 const StyledGridInner = styled.div.withConfig({
   displayName: 'GlobalNavigationRowContainer'
 })<GridProps>`
-  ${({ visibility }) => visibility && visibilityToDisplay(visibility)};
+  ${({ visibility }) => visibility && createVisibilityStyles(visibility, 'grid')};
   transition: grid-template-rows 200ms linear;
   max-height: max-content;
-  ${({ rowStyles }) => rowStyles};
+  ${gridRowStyles};
 `;
 
 const StyledGrid = styled.div.withConfig({
   displayName: 'GlobalNavigationRowContainer'
 })<GridProps>`
-  ${({ visibility }) => visibility && visibilityToDisplay(visibility)};
-  ${({ columns }) =>
-    typeof columns === 'object'
-      ? `grid-template-columns: ${
-        columns[Breakpoints.SM]
-      };${generateResponsiveStyles(
-        'grid-template-columns',
-        columns,
-        Breakpoints.SM
-      )}`
-      : `grid-template-columns: ${
-        typeof columns === 'number'
-          ? `repeat(${columns}, minmax(max-content, 1fr))`
-          : columns
-      };`}
+  ${({ visibility }) => visibility && createVisibilityStyles(visibility, 'grid')};
+  ${({ columns }) => columns ? createResponsiveStyles(
+    'grid-template-columns',
+    columns
+  ) : 'grid-template-columns: repeat(12,minmax(min-content, 1fr))'};
   gap: ${({ gap = '1rem' }) => gap};
   background-color: #eee;
   justify-items: ${({ justifyItems }) => justifyItems || 'stretch'};
   justify-content: ${({ justifyContent }) => justifyContent || 'stretch'};
   align-items: ${({ alignItems }) => alignItems || 'center'};
   overflow: hidden;
-  //transition: all 5s linear;
 `;
 
 export const GlobalNavigationRowContainer: React.FC<GridProps> = ({

@@ -1,15 +1,8 @@
 import React from 'react';
-import { GlobalNavigationContainer } from './styles';
+import { GlobalNavigationContainer, Sentinel } from './styles';
 import GlobalNavigationRow from './components/GlobalNavigationRow';
 import { GlobalNavigationConfig } from './types';
-import useElementPosition from "./useScrollPosition.tsx";
-
-const sentinelStyle: React.CSSProperties = {
-  width: '100%',
-  height: 1,
-  marginBottom: -1,
-  visibility: 'hidden'
-};
+import useElementPosition from './useScrollPosition';
 
 const GlobalNavigation: React.FC<GlobalNavigationConfig> = ({
   rows,
@@ -18,7 +11,7 @@ const GlobalNavigation: React.FC<GlobalNavigationConfig> = ({
   const sentinelRef = React.useRef<HTMLDivElement>(null);
   const [navHeight, setNavHeight] = React.useState<number>(0);
   const position = useElementPosition(sentinelRef);
-  
+
   React.useEffect(() => {
     if (navRef.current) {
       setNavHeight(navRef.current.clientHeight);
@@ -27,9 +20,9 @@ const GlobalNavigation: React.FC<GlobalNavigationConfig> = ({
 
   return (
     <>
-      <div
+      <Sentinel
         ref={sentinelRef}
-        style={{...sentinelStyle, height: `${navHeight}px`}}
+        style={{ height: `${navHeight}px` }}
       />
       <GlobalNavigationContainer ref={navRef}>
         {rows?.map((row, index) => (

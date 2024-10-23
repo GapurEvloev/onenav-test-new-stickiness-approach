@@ -1,55 +1,53 @@
 import {
   Breakpoints,
-  breakpointSizes,
   ResponsiveSetting,
-  VisibilityOptions
+  VisibilityOptions,
+  mediaQueries
 } from './types';
 
-export const generateResponsiveStyles = (
-  property: string,
-  config: ResponsiveSetting<string | number> | string | number,
-  defaultBreakpoint: Breakpoints
-) => {
-  return Object.entries(config)
-  .filter(([breakpoint]) => breakpoint !== defaultBreakpoint) // Filter out the default breakpoint
-  .map(
-    ([breakpoint, value]) => `
-      @media (min-width: ${breakpointSizes[breakpoint as Breakpoints]}) {
-          ${property}: ${value};
-      }`
-  )
-  .join('');
-};
-
-export const generateResponsiveVisibility = (
-  visibility: ResponsiveSetting<VisibilityOptions> | VisibilityOptions,
-  defaultBreakpoint: Breakpoints
-) => {
-  return Object.entries(visibility)
-  .filter(([breakpoint]) => breakpoint !== defaultBreakpoint) // Filter out the default breakpoint
-  .map(
-    ([breakpoint, isVisible]) => `
-      @media (min-width: ${breakpointSizes[breakpoint as Breakpoints]}) {
-          display: ${isVisible ? 'flex' : 'none'};
-      }`
-  )
-  .join('');
-};
-
-export const getVisibilityStyles = (
-  visibility: ResponsiveSetting<VisibilityOptions> | VisibilityOptions
-) => {
-  if (typeof visibility === 'object') {
-    const displayStyle = visibility[Breakpoints.SM] ? 'flex' : 'none';
-    const responsiveStyles = generateResponsiveVisibility(
-      visibility,
-      Breakpoints.SM
-    );
-    return `
-      display: ${displayStyle};
-      ${responsiveStyles}
-    `;
+const createResponsiveStyles = (property: string, config: ResponsiveSetting<any> | any): string => {
+  if (typeof config !== 'object') {
+    return `${property}: ${config};`;
   }
-  
-  return `display: ${visibility ? 'flex' : 'none'};`;
+
+  let defaultStyle = '';
+  const mediaQueryStyles = Object.entries(config)
+    .filter(([breakpoint]) => breakpoint !== Breakpoints.SM)
+    .map(([breakpoint, value]) => `
+      @media ${mediaQueries[breakpoint as Breakpoints]} {
+        ${property}: ${Array.isArray(value) ? value.join(' ') : value};
+      }
+    `)
+    .join('');
+
+  const smValue = config[Breakpoints.SM];
+  if (typeof smValue !== 'undefined') {
+    defaultStyle = `${property}: ${Array.isArray(smValue) ? smValue.join(' ') : smValue};`;
+  }
+
+  return `${defaultStyle} ${mediaQueryStyles}`;
 };
+
+const createVisibilityStyles = (
+  visibility: ResponsiveSetting<VisibilityOptions> | VisibilityOptions,
+  defaultValue = 'flex'
+): string => {
+  if (typeof visibility === 'object') {
+    const defaultStyle = `display: ${visibility[Breakpoints.SM] ? defaultValue : 'none'};`;
+    const mediaQueryStyles = Object.entries(visibility)
+      .filter(([breakpoint]) => breakpoint !== Breakpoints.SM)
+      .map(([breakpoint, value]) => `
+        @media ${mediaQueries[breakpoint as Breakpoints]} {
+          display: ${typeof value === 'boolean' ? (value ? defaultValue : 'none') : value};
+        }
+      `)
+      .join('');
+
+    return `${defaultStyle} ${mediaQueryStyles}`;
+  }
+
+  return `display: ${typeof visibility === 'string' ? visibility : visibility ? defaultValue : 'none'};`;
+};
+
+
+export { createResponsiveStyles, createVisibilityStyles };

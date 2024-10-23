@@ -160,7 +160,7 @@ export const globalNavigationStructureAllure: GlobalNavigationConfig = {
         xxl: true,
         xxxl: true
       },
-      hideOnScroll: 600,
+      hideOnScroll: {  sm: false, md: 400, lg: true },
       areas: [
         {
           gridColumn: {

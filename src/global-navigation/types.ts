@@ -10,12 +10,12 @@ export enum Breakpoints {
 }
 
 export const breakpointSizes: Record<Breakpoints, string> = {
-  [Breakpoints.SM]: '0px', // Default mobile first
-  [Breakpoints.MD]: '320px', // Represents medium devices and up
-  [Breakpoints.LG]: '768px', // Represents large devices and up
-  [Breakpoints.XL]: '1024px', // Extra large devices
-  [Breakpoints.XXL]: '1280px', // Bigger than XL
-  [Breakpoints.XXXL]: '1600px' // Bigger than XXL
+  [Breakpoints.SM]: '0px',
+  [Breakpoints.MD]: '320px',
+  [Breakpoints.LG]: '768px',
+  [Breakpoints.XL]: '1024px',
+  [Breakpoints.XXL]: '1280px',
+  [Breakpoints.XXXL]: '1600px'
 };
 
 export const mediaQueries: Record<Breakpoints, string> = {
@@ -27,13 +27,7 @@ export const mediaQueries: Record<Breakpoints, string> = {
   [Breakpoints.XXXL]: `(min-width: ${breakpointSizes[Breakpoints.XXXL]})`
 };
 
-export type VisibilityOptions =
-  | boolean
-  | 'none'
-  | 'flex'
-  | 'grid'
-  | 'block'
-  | 'inline';
+export type VisibilityOptions = boolean | 'none' | 'flex' | 'grid' | 'block' | 'inline';
 
 export type ResponsiveSetting<T> = {
   [key in Breakpoints]?: T;
@@ -56,44 +50,6 @@ export enum Variant {
   LOGO = 'logo',
   DIVIDER = 'divider'
 }
-
-// cssRowConfigProps TypeScrypt
-export enum CssRowConfigProps {
-  columns = 'grid-template-columns',
-  visibility = 'display',
-  order = 'order',
-  size = 'width',
-  justifyContent = 'justify-content',
-  justifyItems = 'justify-items',
-  alignItems = 'align-items',
-  alignContent = 'align-content',
-  gap = 'gap',
-  autoFlow = 'grid-auto-flow',
-  templateAreas = 'grid-template-areas'
-}
-
-// cssAreaConfigProps TypeScrypt
-export enum CssAreaConfigProps {
-  areaName = 'grid-area',
-  visibility = 'display',
-  order = 'order',
-  gridColumn = 'grid-column',
-  justifyContent = 'justify-content',
-  justifyItems = 'justify-items',
-  justifySelf = 'justify-self',
-  alignItems = 'align-items',
-  alignContent = 'align-content',
-  gap = 'gap'
-}
-
-// Consolidate shared breakpoint-related types
-export type BreakpointVisibility = {
-  [key in Breakpoints]: boolean;
-};
-
-export type Cols = {
-  [key in Breakpoints]?: string | number;
-};
 
 type Source =
   | 'primaryLinks'
@@ -143,8 +99,8 @@ export type ClickableAreaConfig = {
 
 export type GlobalNavigationRowConfig = {
   columns?: ResponsiveSetting<string> | string;
-  visibility?: ResponsiveSetting<VisibilityOptions> | VisibilityOptions; // Could be expanded into a more complex type for handling breakpoints
-  hideOnScroll?: ResponsiveSetting<boolean | number> | boolean | number;
+  visibility?: ResponsiveSetting<VisibilityOptions> | VisibilityOptions;
+  hideOnScroll: ResponsiveSetting<boolean | number> | boolean | number;
   order?: ResponsiveSetting<number> | number;
   size?: ResponsiveSetting<string> | string;
   justifyContent?: ResponsiveSetting<Alignment> | Alignment;
@@ -178,3 +134,12 @@ export type GlobalNavigationConfig = {
   rows: GlobalNavigationRowConfig[];
   navigation?: Navigation[];
 };
+
+
+// new try
+export type Stickiness = boolean | number;
+
+export type RowConfig = {
+  stickiness: Stickiness;
+  content: React.ReactNode;
+}

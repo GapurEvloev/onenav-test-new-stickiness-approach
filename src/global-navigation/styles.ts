@@ -16,3 +16,10 @@ export const GlobalNavigationContainer = styled.div.withConfig({
   overflow: hidden;
   max-height: max-content;
 `;
+
+export const Sentinel = styled.div`
+  width: 100%;
+  height: 1px;
+  margin-bottom: -1px;
+  visibility: hidden;
+`;

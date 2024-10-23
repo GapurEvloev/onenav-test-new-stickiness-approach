@@ -2,7 +2,7 @@ import React from 'react';
 import { GlobalNavigationRowContainer } from './styles';
 import GlobalNavigationArea from '../GlobalNavigationArea';
 import { GlobalNavigationRowConfig } from '../../types';
-import {useStickyStyles} from "../../useStickyRow.tsx";
+import { useStickyRow } from '../../useStickyRow';
 
 export type GlobalNavigationRowProps = GlobalNavigationRowConfig & {
   position: { top: number; scrollY: number; direction: 'up' | 'down' };
@@ -14,13 +14,15 @@ const GlobalNavigationRow: React.FC<GlobalNavigationRowProps> = ({
   hideOnScroll,
   ...rest
 }) => {
-  const rowStyles = useStickyStyles(position, hideOnScroll);
-  console.log({rowStyles})
-  return <GlobalNavigationRowContainer rowStyles={rowStyles} {...rest}>
-    {areas?.map((area, index) => (
-      <GlobalNavigationArea key={index} {...area} />
-    ))}
-  </GlobalNavigationRowContainer>
+  const stickyClassName = useStickyRow(position, hideOnScroll);
+
+  return (
+    <GlobalNavigationRowContainer className={stickyClassName} {...rest}>
+      {areas?.map((area, index) => (
+        <GlobalNavigationArea key={index} {...area} />
+      ))}
+    </GlobalNavigationRowContainer>
+  );
 };
 
 export default GlobalNavigationRow;
